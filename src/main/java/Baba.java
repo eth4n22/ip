@@ -17,7 +17,7 @@ public class Baba {
 
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println("_____________________________");
-                System.out.println("Bye. Hope to see you again soon!");
+                System.out.println("Bye! Hope to see you again soon!");
                 System.out.println("_____________________________");
                 break;
             } else if (userInput.equalsIgnoreCase("list")) {
