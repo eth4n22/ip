@@ -6,7 +6,6 @@ public class Baba {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
 
-        // Greeting message
         System.out.println("_____________________________");
         System.out.println("Hello! I'm Baba");
         System.out.println("What can I do for you?");
@@ -61,39 +60,45 @@ public class Baba {
                 } catch (Exception e) {
                     System.out.println("Invalid format. Use: unmark [task_number]");
                 }
+            } else if (userInput.startsWith("todo ")) {
+                String taskDescription = userInput.substring(5).trim();
+                tasks.add(new ToDo(taskDescription));
+                System.out.println("_____________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                System.out.println("_____________________________");
+            } else if (userInput.startsWith("deadline ")) {
+                String[] parts = userInput.substring(9).split(" /by ", 2);
+                if (parts.length < 2) {
+                    System.out.println("Invalid format. Use: deadline [task] /by [date]");
+                } else {
+                    tasks.add(new Deadline(parts[0], parts[1]));
+                    System.out.println("_____________________________");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(tasks.get(tasks.size() - 1));
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("_____________________________");
+                }
+            } else if (userInput.startsWith("event ")) {
+                String[] parts = userInput.substring(6).split(" /from ", 2);
+                if (parts.length < 2 || !parts[1].contains(" /to ")) {
+                    System.out.println("Invalid format. Use: event [task] /from [start] /to [end]");
+                } else {
+                    String[] timeParts = parts[1].split(" /to ", 2);
+                    tasks.add(new Event(parts[0], timeParts[0], timeParts[1]));
+                    System.out.println("_____________________________");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(tasks.get(tasks.size() - 1));
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("_____________________________");
+                }
             } else {
-                tasks.add(new Task(userInput));
-                System.out.println("_____________________________");
-                System.out.println("Added: " + userInput);
-                System.out.println("_____________________________");
+                System.out.println("Unknown command! Try using 'todo', 'deadline', or 'event'.");
             }
         }
 
         scanner.close();
-    }
-}
-
-// Task class to manage tasks
-class Task {
-    private String description;
-    private boolean isDone;
-
-    public Task(String description) {
-        this.description = description;
-        this.isDone = false;
-    }
-
-    public void markAsDone() {
-        this.isDone = true;
-    }
-
-    public void markAsNotDone() {
-        this.isDone = false;
-    }
-
-    @Override
-    public String toString() {
-        return "[" + (isDone ? "X" : " ") + "] " + description;
     }
 }
 

@@ -1,0 +1,5 @@
+todo buy milk
+deadline return book /by Sunday
+event project meeting /from Monday 2pm /to 4pm
+list
+bye
