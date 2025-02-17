@@ -1,10 +1,19 @@
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Baba {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage("./data/baba.txt");
+        ArrayList<Task> tasks;
+
+        try {
+            tasks = storage.load();
+        } catch (IOException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         System.out.println("_____________________________");
         System.out.println("Hello! I'm Baba");
@@ -22,6 +31,8 @@ public class Baba {
                     break;
                 } else if (userInput.equalsIgnoreCase("list")) {
                     printTaskList(tasks);
+                } else if (userInput.startsWith("delete")) {
+                    deleteTask(tasks, userInput);
                 } else if (userInput.startsWith("mark ")) {
                     markTaskAsDone(tasks, userInput);
                 } else if (userInput.startsWith("unmark ")) {
@@ -35,6 +46,8 @@ public class Baba {
                 } else {
                     throw new BabaException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
+                storage.save(tasks);
+
             } catch (BabaException e) {
                 System.out.println("_____________________________");
                 System.out.println(e.getMessage());
@@ -49,7 +62,7 @@ public class Baba {
         scanner.close();
     }
 
-    private static void printTaskList(ArrayList<Task> tasks) {
+private static void printTaskList(ArrayList<Task> tasks) {
         System.out.println("_____________________________");
         if (tasks.isEmpty()) {
             System.out.println("No tasks added yet.");
@@ -60,6 +73,24 @@ public class Baba {
             }
         }
         System.out.println("_____________________________");
+    }
+
+    private static void deleteTask(ArrayList<Task> tasks, String userInput) throws BabaException {
+        try {
+            int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
+                throw new BabaException("Task index out of bounds");
+            }
+
+            Task removedTask = tasks.remove(taskIndex);
+            System.out.println("_____________________________");
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(removedTask);
+            System.out.println("Now you have " + tasks.size() + " tasks in your list.");
+            System.out.println("_____________________________");
+        } catch (NumberFormatException e) {
+            throw new BabaException("Invalid format. Use: delete [task_number]");
+        }
     }
 
     private static void markTaskAsDone(ArrayList<Task> tasks, String userInput) throws BabaException {
