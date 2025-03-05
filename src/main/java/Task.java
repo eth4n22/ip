@@ -1,3 +1,8 @@
+/**
+ * Represents task in task list
+ * Base class for all other task types
+ */
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -18,6 +23,10 @@ public class Task {
 
     public void markAsNotDone() {
         this.isDone = false;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
