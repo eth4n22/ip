@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,31 +14,30 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> load() throws IOException {  // ✅ Added "throws IOException"
+    public ArrayList<Task> load() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
 
         // Check if file exists, else create it
         if (!file.exists()) {
-            file.getParentFile().mkdirs(); // Ensure directory exists
-            file.createNewFile();  // ✅ Now this method can throw IOException
-            return tasks; // Return empty task list
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+            return tasks;
         }
 
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
-            tasks.add(parseTask(scanner.nextLine())); // Read task line-by-line
+            tasks.add(parseTask(scanner.nextLine()));
         }
         scanner.close();
         return tasks;
     }
 
-
     public void save(ArrayList<Task> tasks) {
         try {
-            FileWriter fw = new FileWriter(filePath); // Overwrites existing file
+            FileWriter fw = new FileWriter(filePath);
             for (Task task : tasks) {
-                fw.write(task.toFileFormat() + System.lineSeparator()); // Save each task line-by-line
+                fw.write(task.toFileFormat() + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
@@ -50,15 +51,25 @@ public class Storage {
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
 
-        switch (type) {
-            case "T":
-                return new ToDo(description, isDone);
-            case "D":
-                return new Deadline(description, isDone, parts[3]);
-            case "E":
-                return new Event(description, isDone, parts[3], parts[4]);
-            default:
-                return null; // Handle corrupted data separately if needed
+        try {
+            switch (type) {
+                case "T":
+                    return new ToDo(description, isDone);
+
+                case "D":
+                    LocalDate dueDate = LocalDate.parse(parts[3]); // ✅ Converts String to LocalDate
+                    return new Deadline(description, isDone, dueDate);
+
+                case "E":
+                    return new Event(description, isDone, parts[3], parts[4]);
+
+                default:
+                    System.out.println("Warning: Unknown task type in storage file.");
+                    return null;
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println("Error parsing date for Deadline task: " + parts[3]);
+            return null; // Handle error gracefully
         }
     }
 }

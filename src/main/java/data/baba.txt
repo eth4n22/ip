@@ -1,2 +1,1 @@
-T | 0 | read
-D | 0 | return book | 6may
+D | 0 | read book | 2025-12-02

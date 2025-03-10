@@ -1,5 +1,11 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Manages the list of tasks, allowing operations like adding, deleting, and marking tasks.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
     private Ui ui;
@@ -14,6 +20,9 @@ public class TaskList {
         this.ui = new Ui();
     }
 
+    /**
+     * Prints all tasks in the list.
+     */
     public void printTaskList() {
         System.out.println("_____________________________");
         if (tasks.isEmpty()) {
@@ -27,6 +36,9 @@ public class TaskList {
         System.out.println("_____________________________");
     }
 
+    /**
+     * Searches for tasks that contain a keyword.
+     */
     public void findTasks(String keyword) {
         System.out.println("_____________________________");
         System.out.println("Here are the matching tasks in your list:");
@@ -47,6 +59,9 @@ public class TaskList {
         System.out.println("_____________________________");
     }
 
+    /**
+     * Processes user input commands and executes corresponding actions.
+     */
     public void processCommand(String input, Parser parser) throws BabaException {
         String command = parser.extractCommand(input);
 
@@ -64,7 +79,7 @@ public class TaskList {
                 addTodoTask(input);
                 break;
             case "deadline":
-                addDeadlineTask(input);
+                addDeadlineTask(input, parser);
                 break;
             case "event":
                 addEventTask(input);
@@ -115,13 +130,19 @@ public class TaskList {
         ui.printSuccess("Added: " + taskDescription);
     }
 
-    private void addDeadlineTask(String input) throws BabaException {
-        String[] parts = input.substring(9).split(" /by ", 2);
-        if (parts.length < 2) {
-            throw new BabaException("Invalid format. Use: deadline [task] /by [date]");
+    /**
+     * Adds a deadline task with LocalDate.
+     */
+    private void addDeadlineTask(String input, Parser parser) throws BabaException {
+        String[] details = parser.extractDeadlineDetails(input);
+
+        try {
+            LocalDate dueDate = LocalDate.parse(details[1].trim()); // Parse date
+            tasks.add(new Deadline(details[0], dueDate));
+            ui.printSuccess("Added: " + details[0] + " (by: " + dueDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ")");
+        } catch (DateTimeParseException e) {
+            throw new BabaException("Invalid date format! Use yyyy-MM-dd (e.g., 2019-10-15).");
         }
-        tasks.add(new Deadline(parts[0], parts[1]));
-        ui.printSuccess("Added: " + parts[0] + " (by: " + parts[1] + ")");
     }
 
     private void addEventTask(String input) throws BabaException {
@@ -138,4 +159,3 @@ public class TaskList {
         return tasks;
     }
 }
-

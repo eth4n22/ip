@@ -1,11 +1,13 @@
 /**
- * Baba Class represents main chatbot system
- * Initializes storage, UI, Tasks handling, command parsing
+ * Baba Class represents the main chatbot system.
+ * Initializes storage, UI, task handling, and command parsing.
  */
 
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Baba {
     private Storage storage;
@@ -13,6 +15,10 @@ public class Baba {
     private Ui ui;
     private Parser parser;
 
+    /**
+     * Initializes Baba chatbot with storage, UI, task handling, and parser.
+     * @param filePath Path to the storage file.
+     */
     public Baba(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -26,6 +32,9 @@ public class Baba {
         }
     }
 
+    /**
+     * Runs the chatbot, processing user input in a loop.
+     */
     public void run() {
         ui.printWelcomeMessage();
 
@@ -35,16 +44,22 @@ public class Baba {
                 String userInput = scanner.nextLine().trim();
                 String command = parser.extractCommand(userInput);
 
-                if (command.equals("bye")) {
-                    ui.printExitMessage();
-                    break;
-                } else if (command.equals("list")) {
-                    taskList.printTaskList();
-                } else if (command.equals("find")) {  // New case for finding tasks
-                    String keyword = parser.extractKeyword(userInput);
-                    taskList.findTasks(keyword);
-                } else {
-                    taskList.processCommand(userInput, parser);
+                switch (command) {
+                    case "bye":
+                        ui.printExitMessage();
+                        return;
+
+                    case "list":
+                        taskList.printTaskList();
+                        break;
+
+                    case "find":
+                        String keyword = parser.extractKeyword(userInput);
+                        taskList.findTasks(keyword);
+                        break;
+
+                    default:
+                        taskList.processCommand(userInput, parser);
                 }
 
                 storage.save(taskList.getTasks());
@@ -55,9 +70,12 @@ public class Baba {
                 ui.printError("An unexpected error occurred: " + e.getMessage());
             }
         }
-        scanner.close();
     }
 
+    /**
+     * Main entry point for the chatbot.
+     * @param args Command-line arguments (unused).
+     */
     public static void main(String[] args) {
         new Baba("./data/baba.txt").run();
     }
