@@ -1,1 +1,2 @@
-T | 1 | bang bang
+T | 0 | read
+D | 0 | return book | 6may
