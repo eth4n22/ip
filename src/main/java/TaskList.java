@@ -109,7 +109,8 @@ public class TaskList {
             throw new BabaException("Invalid task number.");
         }
         tasks.get(taskIndex).markAsDone();
-        ui.printSuccess("Nice! I've marked this task as done: " + tasks.get(taskIndex));
+        ui.printSuccess("Nice! I've marked this task as done:");
+        System.out.println(tasks.get(taskIndex));
     }
 
     private void unmarkTask(String input) throws BabaException {
@@ -118,7 +119,8 @@ public class TaskList {
             throw new BabaException("Invalid task number.");
         }
         tasks.get(taskIndex).markAsNotDone();
-        ui.printSuccess("OK, I've marked this task as not done yet: " + tasks.get(taskIndex));
+        ui.printSuccess("OK, I've marked this task as not done yet:");
+        System.out.println(tasks.get(taskIndex));
     }
 
     private void addTodoTask(String input) throws BabaException {
