@@ -1,3 +1,7 @@
+/**
+ * file for saving data into local storage
+ */
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
