@@ -152,15 +152,15 @@ __________________________________________________________
 
 ## Command Summary
 
-| Command | Format | Example |
-|---------|--------|---------|
-| **Add Todo** | `todo DESCRIPTION` | `todo finish CS2113 homework` |
-| **Add Deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline submit report /by 15/3/2025 1430` |
-| **Add Event** | `event DESCRIPTION /from START_TIME /to END_TIME` | `event team meeting /from 16/3/2025 1000 /to 16/3/2025 1200` |
-| **List Tasks** | `list` | `list` |
-| **Mark as Done** | `mark TASK_NUMBER` | `mark 1` |
-| **Unmark** | `unmark TASK_NUMBER` | `unmark 1` |
-| **Delete** | `delete TASK_NUMBER` | `delete 2` |
-| **Find** | `find KEYWORD` | `find meeting` |
-| **Exit** | `bye` | `bye` 
+| Command | Format | Example                                                   |
+|---------|--------|-----------------------------------------------------------|
+| **Add Todo** | `todo DESCRIPTION` | `todo finish homework`                                    |
+| **Add Deadline** | `deadline DESCRIPTION /by DATE_TIME` | `deadline finish homework /by 14/3/2025`                  |
+| **Add Event** | `event DESCRIPTION /from START_TIME /to END_TIME` | `project meeting /from 2025-03-15 10:00AM /to 2025-03-15 12:00PM` |
+| **List Tasks** | `list` | `list`                                                    |
+| **Mark as Done** | `mark TASK_NUMBER` | `mark 1`                                                  |
+| **Unmark** | `unmark TASK_NUMBER` | `unmark 1`                                                |
+| **Delete** | `delete TASK_NUMBER` | `delete 2`                                                |
+| **Find** | `find KEYWORD` | `find meeting`                                            |
+| **Exit** | `bye` | `bye`                                                     
 
