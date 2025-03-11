@@ -17,16 +17,21 @@ BABA is a chatbot that runs on the command line. It aims to help users keep trac
 ## Features
 
 ### Adding a Todo Task
+
 Adding a Todo task to the user's list
-Format: 'todo DESCRIPTION'
-Example: 'todo finish Homework'
-'__________________________________________________________
+
+**Format:** 'todo DESCRIPTION'
+
+**Example:** 'todo finish Homework'
+
+'''
+__________________________________________________________
 Got it. I've added this task:
-[T] [ ] finish Homework
+[T] [ ] finish CS2113 homework
 Now you have 1 task in the list.
-__________________________________________________________'
+__________________________________________________________
 
-
+'''
 
 ### Adding Deadlines
 
