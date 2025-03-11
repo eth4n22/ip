@@ -1,6 +1,6 @@
 /**
- * Baba Class represents the main chatbot system.
- * Initializes storage, UI, task handling, and command parsing.
+ * Baba Class represents the main chatbot system
+ * Initializes storage, UI, task handling, and command parsing
  */
 
 import java.util.Scanner;
