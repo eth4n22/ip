@@ -1,13 +1,48 @@
-# Duke User Guide
+# IP
 
-// Update the title above to match the actual product name
+## BABA User Guide
 
-// Product screenshot goes here
+### Introduction
+BABA is a chatbot that runs on the command line. It aims to help users keep track of their tasks, events and deadlines.
 
-// Product intro goes here
+---
 
-## Adding deadlines
+### **Getting Started**
+1. Run the program in command line/terminal.
+2. Start by entering commands to manage your tasks.
+3. Type 'bye' to exit the application.
 
+---
+
+## Features
+
+### Adding a Todo Task
+Adding a Todo task to the user's list
+Format: 'todo DESCRIPTION'
+Example: 'todo finish Homework'
+'__________________________________________________________
+Got it. I've added this task:
+[T] [ ] finish Homework
+Now you have 1 task in the list.
+__________________________________________________________'
+
+
+
+### Adding Deadlines
+
+### Adding Events
+
+### Listing All Tasks
+
+### Marking a Task as DONE
+
+### Unmarking a Task as DONE
+
+### Deleting a Task
+
+### Finding a Task from List
+
+### Exiting the application
 // Describe the action and its outcome.
 
 // Give examples of usage
